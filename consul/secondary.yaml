@@ -1,0 +1,40 @@
+global:
+  name: consul
+  datacenter: secondary
+  acls:
+    manageSystemACLs: true
+    replicationToken:
+      secretName: consul-federation
+      secretKey: replicationToken
+  tls:
+    enabled: true
+    caCert:
+      secretName: consul-federation
+      secretKey: caCert
+    caKey:
+      secretName: consul-federation
+      secretKey: caKey
+  federation:
+    enabled: true
+
+server:
+  replicas: 1
+  extraVolumes:
+    - type: secret
+      name: consul-federation
+      items:
+        - key: serverConfigJSON
+          path: config.json
+      load: true
+
+meshGateway:
+  enabled: true
+  replicas: 1
+
+connectInject:
+  enabled: true
+  transparentProxy:
+    defaultEnabled: false
+
+controller:
+  enabled: true

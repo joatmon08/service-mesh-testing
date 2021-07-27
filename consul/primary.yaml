@@ -1,0 +1,31 @@
+global:
+  name: consul
+  datacenter: primary
+  acls:
+    manageSystemACLs: true
+    createReplicationToken: true
+  federation:
+    enabled: true
+    createFederationSecret: true
+  tls:
+    enabled: true
+
+server:
+  replicas: 1
+
+meshGateway:
+  enabled: true
+  replicas: 1
+
+connectInject:
+  enabled: true
+  transparentProxy:
+    defaultEnabled: false
+
+ui:
+  enabled: true
+  service:
+    type: LoadBalancer
+
+controller:
+  enabled: true
